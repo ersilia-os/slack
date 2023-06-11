@@ -3,9 +3,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[scripts]
+dev = "python3.11 app.py"
+
 [packages]
 slack-bolt = "*"
 requests = "*"
+aiohttp = "*"
 
 [dev-packages]
 

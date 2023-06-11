@@ -1,17 +1,23 @@
-# Import the async app instead of the regular one
-from slack_bolt.async_app import AsyncApp
+import os
+import re
+from slack_bolt import App
+from slack_bolt.adapter.socket_mode import SocketModeHandler
 
-app = AsyncApp()
+PREFIX = os.environ.get("COMMAND_PREFIX", "\.")
 
-@app.event("app_mention")
-async def event_test(body, say, logger):
-    logger.info(body)
-    await say("What's up?")
+# Initializes the app with the bot token and socket mode handler
+app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 
-@app.command("/hello-bolt-python")
-async def command(ack, body, respond):
-    await ack()
-    await respond(f"Hi <@{body['user_id']}>!")
 
+# Listens to incoming messages that start with ".hello"
+@app.message(re.compile("^" + PREFIX + "hello"))
+def message_hello(message, say):
+    # say() sends a message to the channel where the event was triggered
+    say(
+        text=f"Hey there <@{message['user']}>!",
+    )
+
+
+# Start the app
 if __name__ == "__main__":
-    app.start(3000)
+    SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
