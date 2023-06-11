@@ -2,6 +2,12 @@
 
 A slash command Slack bot for Ersilia
 
+## Usage
+
+⚠️ THIS IS AN EXPERIMENTAL PROJECT ⚠️
+
+![example](./docs/assets/example.png)
+
 ## Development
 
 This section goes over how to get started with development for this Slack application.
